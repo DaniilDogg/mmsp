@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/mmsp/static/css/main.14df64dc.css",
+    "main.js": "/mmsp/static/js/main.e7d36b24.js",
+    "static/js/787.ed8827f2.chunk.js": "/mmsp/static/js/787.ed8827f2.chunk.js",
+    "index.html": "/mmsp/index.html",
+    "main.14df64dc.css.map": "/mmsp/static/css/main.14df64dc.css.map",
+    "main.e7d36b24.js.map": "/mmsp/static/js/main.e7d36b24.js.map",
+    "787.ed8827f2.chunk.js.map": "/mmsp/static/js/787.ed8827f2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.14df64dc.css",
+    "static/js/main.e7d36b24.js"
+  ]
+}
