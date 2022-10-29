@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -13,11 +13,19 @@ export const Diagram = ({ data, w }) => {
   const chart = useRef(null);
   const [height, setHeight] = useState(w/2)
 
-  useLayoutEffect(() => {
+  const resizeHandler = () => {
     if(chart.current != null){
       setHeight(chart?.current?.offsetWidth/2)
-    }    
-  }, [chart?.current?.offsetWidth])
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeHandler);
+
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, []);
 
   if (data == null) return <></>;
   return (

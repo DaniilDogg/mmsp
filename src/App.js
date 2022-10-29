@@ -1,16 +1,26 @@
 import "./App.css";
-import React from "react";
-import { Route, Routes } from "react-router-dom"
+import React, {useState} from "react";
+import {useRoutes } from "react-router-dom"
+import { NavBar } from "./components/NavBar";
 
-import Lab1 from "./components/lab1/Lab1";
+import Lab1_2 from "./components/lab1_2/Lab1_2";
+import Lab3 from "./components/lab3/Lab3";
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/mmsp" element={<Lab1 />} />
-      <Route path="/lab1" element={<Lab1 />} />
-    </Routes>
-  );
+  
+  return(
+    <>
+    <NavBar/>
+    {
+      useRoutes([
+        { path: "/", element: <Lab1_2 /> },    
+        { path: "/mmsp", element: <Lab1_2 /> },
+        { path: "/lab1", element: <Lab1_2 /> },
+        { path: "/lab2", element: <Lab3 /> }
+      ])
+    }
+    </>
+  )
 }
 
 export default App;

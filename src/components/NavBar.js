@@ -1,6 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export const NavBar = ({ title }) => {
+export const NavBar = () => {
+  const [title, setTitle] = useState()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов']
+
+  useEffect(()=>{
+    if (["/", "/mmsp", "/lab1"].includes(location.pathname)){
+      setTitle(titles[0])
+      return
+    }
+    if (location.pathname == "/lab2"){
+      setTitle(titles[1])
+      return
+    }
+    setTitle("Page not found")
+  }, [location])
+
   return (
     <div>
       <div className="offcanvas offcanvas-start" id="demo">
@@ -18,10 +37,27 @@ export const NavBar = ({ title }) => {
               type="button"
               className="btn text-reset flex-grow-1 text-start py-2"
               data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab1");
+              }}
             >
               <span className="lead">
                 Лабораторная работа №1-2
               </span>              
+            </button>
+          </div>
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab2");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №3
+              </span>
             </button>
           </div>
         </div>
@@ -35,7 +71,7 @@ export const NavBar = ({ title }) => {
             data-bs-toggle="offcanvas"
             data-bs-target="#demo"
             >
-            Open
+           Меню
             </button>            
         </div>
         <h4 className="title text-center my-4" style={{flexGrow: '3'}}>{title}</h4>
