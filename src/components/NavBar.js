@@ -9,7 +9,7 @@ export const NavBar = () => {
   const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов']
 
   useEffect(()=>{
-    if (["/", "/mmsp", "/lab1"].includes(location.pathname)){
+    if (["/", "/mmsp/", "/lab1"].includes(location.pathname)){
       setTitle(titles[0])
       return
     }

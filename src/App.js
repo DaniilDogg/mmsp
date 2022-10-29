@@ -14,7 +14,7 @@ function App() {
     {
       useRoutes([
         { path: "/", element: <Lab1_2 /> },    
-        { path: "/mmsp", element: <Lab1_2 /> },
+        { path: "/mmsp/", element: <Lab1_2 /> },
         { path: "/lab1", element: <Lab1_2 /> },
         { path: "/lab2", element: <Lab3 /> }
       ])
