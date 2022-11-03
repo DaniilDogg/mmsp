@@ -1,27 +1,23 @@
-import "./Lab3.css";
+import "./Lab4.css";
 import React, { useState, useRef, useEffect, useCallback, memo } from "react";
-import { MathComponent } from "mathjax-react";
 
 import { InputGroup } from "../InputGroup";
 
 import { Diagram } from "./components/Diagram";
 
-/*
-  x   x1    m0    mk    dm    c0    ck    Dc    Kтр0    Kтрk    dKтр
-  2   20    27    33	  300   2     4     10    24      34      500
-*/
-export default function Lab3() {
-  const ref_x = useRef(); //2
-  const ref_x1 = useRef(); //20
-  const ref_m0 = useRef(); //27
-  const ref_mk = useRef(); //33
-  const ref_dm = useRef(); //300
-  const ref_c0 = useRef(); //2
-  const ref_ck = useRef(); //4
-  const ref_dc = useRef(); //10
-  const ref_ktr0 = useRef(); //24
-  const ref_ktrk = useRef(); //34
-  const ref_dktr = useRef(); //500
+export default function Lab4() {
+  const ref_q1 = useRef(); //19
+  const ref_q = useRef(); //500
+  const ref_E = useRef(); //500
+  const ref_L0 = useRef(); //20
+  const ref_Lk = useRef(); //27
+  const ref_dL = useRef(); //33
+  const ref_R0 = useRef(); //300
+  const ref_Rk = useRef(); //2
+  const ref_dR = useRef(); //4
+  const ref_C0 = useRef(); //10
+  const ref_Ck = useRef(); //24
+  const ref_dC = useRef(); //34
   const ref_t0 = useRef(); //0
   const ref_tk = useRef(); //5
   const ref_dt = useRef(); //0.05
@@ -31,44 +27,49 @@ export default function Lab3() {
   const main = useRef(null);
 
   const buildDiagram = (
-    rx,
-    rx1,
-    rm0,
-    rmk,
-    rdm,
-    rc0,
-    rck,
-    rdc,
-    rktr0,
-    rktrk,
-    rdktr,
+    rq1,
+    rq,
+    rE,
+    rL0,
+    rLk,
+    rdL,
+    rR0,
+    rRk,
+    rdR,
+    rC0,
+    rCk,
+    rdC,
     rt0,
     rtk,
     rdt
   ) => {
-    const x = rx == 0 ? 2 : rx;
-    const x1 = rx1 == 0 ? 20 : rx1;
-    const m0 = (rm0 == 0 ? 27 : rm0) * 100;
-    const mk = (rmk == 0 ? 33 : rmk) * 100;
-    const dm = rdm == 0 ? 300 : rdm;
-    const c0 = (rc0 == 0 ? 2 : rc0) * 10000;
-    const ck = (rck == 0 ? 4 : rck) * 10000;
-    const dc = (rdc == 0 ? 10 : rdc) * 1000;
-    const ktr0 = (rktr0 == 0 ? 24 : rktr0) * 100;
-    const ktrk = (rktrk == 0 ? 34 : rktrk) * 100;
-    const dktr = rdktr == 0 ? 500 : rdktr;
+    const q1 = (rq1 == 0 ? 19 : rq1) * 10 ** 2;
+    const q = rq == 0 ? 2 : rq;
+    const E = (rE == 0 ? 27 : rE) * 10 ** 2;
+    const L0 = (rL0 == 0 ? 25 : rL0) * 10 ** 2;
+    const Lk = (rLk == 0 ? 33 : rLk) * 10 ** 2;
+    const dL = rdL == 0 ? 400 : rdL;
+    const R0 = (rR0 == 0 ? 25 : rR0) * 10 ** 2;
+    const Rk = (rRk == 0 ? 34 : rRk) * 10 ** 2;
+    const dR = rdR == 0 ? 450 : rdR;
+    const C0 = (rC0 == 0 ? 9 : rC0) * 10 ** 2;
+    const Ck = (rCk == 0 ? 17 : rCk) * 10 ** 2;
+    const dC = rdC == 0 ? 400 : rdC;
     const t0 = rt0 == 0 ? 0 : rt0;
     const tk = rtk == 0 ? 5 : rtk;
     const dt = rdt == 0 ? 0.05 : rdt;
-    let c = c0;
-    let k = ktr0;
+
+    let C = C0;
+    let R = R0;
     let id = 0;
     const d = [];
-    for (let m = m0; m <= mk; m += dm) {
-      d.push(modelEquation(x, x1, m, c, k, t0, tk, dt, id++));
-      c += dc;
-      k += dktr;
+
+    for (let L = L0; L <= Lk; L += dL) {
+      d.push(modelEquation(q, q1, L, R, C, E, t0, tk, dt, id++));
+      C += dC;
+      R += dR;
     }
+
     const myData = [];
     for (let i = 0; i < d[0].length; i++) {
       const obj = {};
@@ -81,34 +82,42 @@ export default function Lab3() {
     setData(myData);
   };
 
-  const modelEquation = (x, x1, m, c, k, tStart, tStop, tStep, id) => {
-    let mDefault = m,
-      cDefault = c,
-      kDefault = k;
+  function modelEquation(q, q1, L, R, C, E, tStart, tStop, tStep, id) {
+    console.log(L);
 
-    let func = (x1, x2, k = kDefault, c = cDefault, m = mDefault) => {
-      const P = 0;
-      return (-k * x2 - c * x1 + P) / m;
+    let LDefault = L,
+      RDefault = R,
+      CDefault = C,
+      EDefault = E;
+
+    let func = (
+      q1,
+      q2,
+      C = CDefault,
+      R = RDefault,
+      L = LDefault,
+      E = EDefault
+    ) => {
+      return (E - q1 / C - R * q2) / L;
     };
 
     const eulerMethodIterationCount = (tStop - tStart) / tStep;
 
-    const model = EulerMethod(eulerMethodIterationCount, tStep, x, x1, func);
+    const model = EulerMethod(eulerMethodIterationCount, tStep, q, q1, func);
 
     let modelArguments = [];
     for (let i = 0; i < model[1].length; i++) {
       modelArguments.push(Number((tStep * i + tStart).toFixed(4)));
     }
+
     const d = [];
     for (let i = 0; i < modelArguments.length; i++) {
       d.push({ X: modelArguments[i], ["Y" + id]: model[1][i] });
     }
     return d;
-  };
+  }
 
-  const EulerMethod = (n, h, x1_0, x2_0, func) => {
-    // ? x1_i+1 = x1_i + h * x2_i
-    // ? x2_i+1 = x2_i + h * (-k * x2_i - c * x1_i + P) / m
+  function EulerMethod(n, h, x1_0, x2_0, func) {
 
     let x1 = [x1_0];
     let x2 = [x2_0];
@@ -122,36 +131,38 @@ export default function Lab3() {
     }
 
     return [x1, x2];
-    //return { time: x1, x: x2 }
-  };
+  }
 
   const inputs = [
     [
       {
-        ref: ref_x,
+        ref: ref_q1,
         label1: (
           <span>
-            x<sub></sub>
+            q<sub>1</sub>[0]
           </span>
         ),
-        placeholder: "2",
+        label2: (
+          <span>
+            *10<sup>2</sup>
+          </span>
+        ),
+        placeholder: "19",
       },
       {
-        ref: ref_x1,
+        ref: ref_q,
         label1: (
           <span>
-            x<sub>1</sub>[0]
+            q<sub></sub>
           </span>
         ),
         placeholder: "22",
       },
-    ],
-    [
       {
-        ref: ref_m0,
+        ref: ref_E,
         label1: (
           <span>
-            m<sub>0</sub>
+            E<sub></sub>
           </span>
         ),
         label2: (
@@ -161,11 +172,27 @@ export default function Lab3() {
         ),
         placeholder: "27",
       },
+    ],
+    [
       {
-        ref: ref_mk,
+        ref: ref_L0,
         label1: (
           <span>
-            m<sub>k</sub>
+            L<sub>0</sub>
+          </span>
+        ),
+        label2: (
+          <span>
+            *10<sup>2</sup>
+          </span>
+        ),
+        placeholder: "25",
+      },
+      {
+        ref: ref_Lk,
+        label1: (
+          <span>
+            L<sub>k</sub>
           </span>
         ),
         label2: (
@@ -176,65 +203,21 @@ export default function Lab3() {
         placeholder: "33",
       },
       {
-        ref: ref_dm,
+        ref: ref_dL,
         label1: (
           <span>
-            dm<sub></sub>
+            dL<sub></sub>
           </span>
         ),
-        placeholder: "300",
+        placeholder: "400",
       },
     ],
     [
       {
-        ref: ref_c0,
+        ref: ref_R0,
         label1: (
           <span>
-            c<sub>0</sub>
-          </span>
-        ),
-        label2: (
-          <span>
-            *10<sup>4</sup>
-          </span>
-        ),
-        placeholder: "2",
-      },
-      {
-        ref: ref_ck,
-        label1: (
-          <span>
-            c<sub>k</sub>
-          </span>
-        ),
-        label2: (
-          <span>
-            *10<sup>4</sup>
-          </span>
-        ),
-        placeholder: "4",
-      },
-      {
-        ref: ref_dc,
-        label1: (
-          <span>
-            dc<sub></sub>
-          </span>
-        ),
-        label2: (
-          <span>
-            *10<sup>3</sup>
-          </span>
-        ),
-        placeholder: "10",
-      },
-    ],
-    [
-      {
-        ref: ref_ktr0,
-        label1: (
-          <span>
-            k<sub>0</sub>
+            R<sub>0</sub>
           </span>
         ),
         label2: (
@@ -242,13 +225,13 @@ export default function Lab3() {
             *10<sup>2</sup>
           </span>
         ),
-        placeholder: "24",
+        placeholder: "25",
       },
       {
-        ref: ref_ktrk,
+        ref: ref_Rk,
         label1: (
           <span>
-            k<sub>k</sub>
+            R<sub>k</sub>
           </span>
         ),
         label2: (
@@ -259,13 +242,52 @@ export default function Lab3() {
         placeholder: "34",
       },
       {
-        ref: ref_dktr,
+        ref: ref_dR,
         label1: (
           <span>
-            dk<sub></sub>
+            dR<sub></sub>
           </span>
         ),
-        placeholder: "500",
+        placeholder: "450",
+      },
+    ],
+    [
+      {
+        ref: ref_C0,
+        label1: (
+          <span>
+            C<sub>0</sub>
+          </span>
+        ),
+        label2: (
+          <span>
+            *10<sup>2</sup>
+          </span>
+        ),
+        placeholder: "9",
+      },
+      {
+        ref: ref_Ck,
+        label1: (
+          <span>
+            k<sub>k</sub>
+          </span>
+        ),
+        label2: (
+          <span>
+            *10<sup>2</sup>
+          </span>
+        ),
+        placeholder: "17",
+      },
+      {
+        ref: ref_dC,
+        label1: (
+          <span>
+            dC<sub></sub>
+          </span>
+        ),
+        placeholder: "400",
       },
     ],
     [
@@ -300,7 +322,7 @@ export default function Lab3() {
   ];
   return (
     <div>
-      <div className="container lab3" style={{ height: "100vh" }} ref={main}>
+      <div className="container lab4" style={{ height: "100vh" }} ref={main}>
         <div className="d-flex py-2 px-0 mt-4">
           <InputGroup inputs={inputs} />
         </div>
@@ -310,17 +332,18 @@ export default function Lab3() {
             className="btn btn-primary mt-3 justify-content-center"
             onClick={() => {
               buildDiagram(
-                ref_x.current.value,
-                ref_x1.current.value,
-                ref_m0.current.value,
-                ref_mk.current.value,
-                ref_dm.current.value,
-                ref_c0.current.value,
-                ref_ck.current.value,
-                ref_dc.current.value,
-                ref_ktr0.current.value,
-                ref_ktrk.current.value,
-                ref_dktr.current.value,
+                ref_q1.current.value,
+                ref_q.current.value,
+                ref_E.current.value,
+                ref_L0.current.value,
+                ref_Lk.current.value,
+                ref_dL.current.value,
+                ref_R0.current.value,
+                ref_Rk.current.value,
+                ref_dR.current.value,
+                ref_C0.current.value,
+                ref_Ck.current.value,
+                ref_dC.current.value,
                 ref_t0.current.value,
                 ref_tk.current.value,
                 ref_dt.current.value

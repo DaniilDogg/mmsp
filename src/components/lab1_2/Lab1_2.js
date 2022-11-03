@@ -59,52 +59,52 @@ export default function Lab1_2() {
   const inputs = [
     [
       {
-        label: "a",
+        label1: "a",
         placeholder: "2",
         ref: ref_a
       },
       {
         ref: ref_c1,
-        label: <span>c<sub>1</sub></span>,
+        label1: <span>c<sub>1</sub></span>,
         placeholder: "-10",
       },
       {
         ref: ref_c2,
-        label: <span>c<sub>2</sub></span>,
+        label1: <span>c<sub>2</sub></span>,
         placeholder: "10",
       },
     ],
     [
       {
         ref: ref_t0,
-        label: <span>t<sub>0</sub></span>,
+        label1: <span>t<sub>0</sub></span>,
         placeholder: "0.1",
       },
       {
         ref: ref_tk,
-        label: <span>t<sub>k</sub></span>,
+        label1: <span>t<sub>k</sub></span>,
         placeholder: "2",
       },
       {
         ref: ref_dt,
-        label: <span>d<sub>t</sub></span>,
+        label1: <span>d<sub>t</sub></span>,
         placeholder: "0.2",
       },
     ],
     [
       {
         ref: ref_f0,
-        label: <span>f<sub>0</sub></span>,
+        label1: <span>f<sub>0</sub></span>,
         placeholder: "5",
       },
       {
         ref: ref_fk,
-        label: <span>f<sub>k</sub></span>,
+        label1: <span>f<sub>k</sub></span>,
         placeholder: "10",
       },
       {
         ref: ref_df,
-        label: <span>d<sub>f</sub></span>,
+        label1: <span>d<sub>f</sub></span>,
         placeholder: "5",
       },
     ],

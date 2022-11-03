@@ -6,15 +6,19 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов']
+  const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов', 'Моделирование колебательного контура']
 
   useEffect(()=>{
-    if (["/", "/mmsp/", "/lab1"].includes(location.pathname)){
+    if (["/", "/mmsp", "/mmsp/", "/lab1-2"].includes(location.pathname)){
       setTitle(titles[0])
       return
     }
-    if (location.pathname == "/lab2"){
+    if (location.pathname == "/lab3"){
       setTitle(titles[1])
+      return
+    }
+    if (location.pathname == "/lab4"){
+      setTitle(titles[2])
       return
     }
     setTitle("Page not found")
@@ -22,6 +26,7 @@ export const NavBar = () => {
 
   return (
     <div>
+
       <div className="offcanvas offcanvas-start" id="demo">
         <div className="offcanvas-header">
           <h3 className="offcanvas-title">Лабораторные Работы</h3>
@@ -31,14 +36,16 @@ export const NavBar = () => {
             data-bs-dismiss="offcanvas"
           ></button>
         </div>
+
         <div className="offcanvas-body">
+
           <div className="d-flex border-bottom border-secondary border-opacity-50">
             <button
               type="button"
               className="btn text-reset flex-grow-1 text-start py-2"
               data-bs-dismiss="offcanvas"
               onClick={()=>{
-                navigate("/lab1");
+                navigate("/lab1-2");
               }}
             >
               <span className="lead">
@@ -46,17 +53,33 @@ export const NavBar = () => {
               </span>              
             </button>
           </div>
+
           <div className="d-flex border-bottom border-secondary border-opacity-50">
             <button
               type="button"
               className="btn text-reset flex-grow-1 text-start py-2"
               data-bs-dismiss="offcanvas"
               onClick={()=>{
-                navigate("/lab2");
+                navigate("/lab3");
               }}
             >
               <span className="lead">
                 Лабораторная работа №3
+              </span>
+            </button>
+          </div>
+
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab4");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №4
               </span>
             </button>
           </div>

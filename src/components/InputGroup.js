@@ -14,7 +14,8 @@ export const InputGroup = ({ inputs }) => {
               return (
                 <div className="px-2" key={kc++}>
                   <CustomInput
-                    label={input.label}
+                    label1={input.label1}
+                    label2={input.label2 === undefined ? null : input.label2}
                     placeholder={input.placeholder}
                     inputRef={input.ref}
                   />
