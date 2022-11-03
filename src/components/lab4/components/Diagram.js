@@ -27,7 +27,6 @@ export const Diagram = ({ data, w }) => {
     };
   }, []);
 
-  console.log(data);
   if (data == null) return <></>;
   let i = 0;
   return (
@@ -39,7 +38,7 @@ export const Diagram = ({ data, w }) => {
         <LineChart data={data} margin={{ top: 10, right: 10, left: -35 }}>
           {data.map((line) => {
             return (
-              <Line type="monotone" dataKey={`Y${i++}`} stroke="#8884d8" />
+              <Line key={i} type="monotone" dataKey={`Y${i++}`} stroke="#8884d8" />
             );
           })}
           <XAxis dataKey="X" />

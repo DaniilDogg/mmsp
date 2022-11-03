@@ -44,20 +44,20 @@ export default function Lab4() {
     rdt
   ) => {
     const q1 = (rq1 == 0 ? 19 : rq1) * 10 ** 2;
-    const q = rq == 0 ? 2 : rq;
+    const q = (rq == 0 ? 2 : rq) * 1;
     const E = (rE == 0 ? 27 : rE) * 10 ** 2;
     const L0 = (rL0 == 0 ? 25 : rL0) * 10 ** 2;
     const Lk = (rLk == 0 ? 33 : rLk) * 10 ** 2;
-    const dL = rdL == 0 ? 400 : rdL;
+    const dL = (rdL == 0 ? 400 : rdL) * 1;
     const R0 = (rR0 == 0 ? 25 : rR0) * 10 ** 2;
     const Rk = (rRk == 0 ? 34 : rRk) * 10 ** 2;
-    const dR = rdR == 0 ? 450 : rdR;
+    const dR = (rdR == 0 ? 450 : rdR) * 1;
     const C0 = (rC0 == 0 ? 9 : rC0) * 10 ** 2;
     const Ck = (rCk == 0 ? 17 : rCk) * 10 ** 2;
-    const dC = rdC == 0 ? 400 : rdC;
-    const t0 = rt0 == 0 ? 0 : rt0;
-    const tk = rtk == 0 ? 5 : rtk;
-    const dt = rdt == 0 ? 0.05 : rdt;
+    const dC = (rdC == 0 ? 400 : rdC) * 1;
+    const t0 = (rt0 == 0 ? 0 : rt0) * 1;
+    const tk = (rtk == 0 ? 5 : rtk) * 1;
+    const dt = (rdt == 0 ? 0.05 : rdt) * 1;
 
     let C = C0;
     let R = R0;
@@ -69,6 +69,7 @@ export default function Lab4() {
       C += dC;
       R += dR;
     }
+    console.log(d)
 
     const myData = [];
     for (let i = 0; i < d[0].length; i++) {
@@ -78,36 +79,34 @@ export default function Lab4() {
       }
       myData.push(obj);
     }
-    //console.log(myData)
     setData(myData);
   };
 
-  function modelEquation(q, q1, L, R, C, E, tStart, tStop, tStep, id) {
-    console.log(L);
+  function modelEquation(q, q1, L, R, C, E, t0, tk, dt, id) {
 
-    let LDefault = L,
-      RDefault = R,
-      CDefault = C,
-      EDefault = E;
+    let LCur = L,
+      RCur = R,
+      CCur = C,
+      ECur = E;
 
     let func = (
       q1,
       q2,
-      C = CDefault,
-      R = RDefault,
-      L = LDefault,
-      E = EDefault
+      C = CCur,
+      R = RCur,
+      L = LCur,
+      E = ECur
     ) => {
       return (E - q1 / C - R * q2) / L;
     };
 
-    const eulerMethodIterationCount = (tStop - tStart) / tStep;
+    const eulerMethodIterationCount = (tk - t0) / dt;
 
-    const model = EulerMethod(eulerMethodIterationCount, tStep, q, q1, func);
+    const model = EulerMethod(eulerMethodIterationCount, dt, q, q1, func);
 
     let modelArguments = [];
     for (let i = 0; i < model[1].length; i++) {
-      modelArguments.push(Number((tStep * i + tStart).toFixed(4)));
+      modelArguments.push(Number((dt * i + t0).toFixed(4)));
     }
 
     const d = [];
@@ -270,7 +269,7 @@ export default function Lab4() {
         ref: ref_Ck,
         label1: (
           <span>
-            k<sub>k</sub>
+            C<sub>k</sub>
           </span>
         ),
         label2: (

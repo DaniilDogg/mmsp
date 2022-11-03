@@ -6,7 +6,7 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов', 'Моделирование колебательного контура']
+  const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов', 'Моделирование колебательного контура', 'Пример моделирования физического процесса «Шахтная клеть»']
 
   useEffect(()=>{
     if (["/", "/mmsp", "/mmsp/", "/lab1-2"].includes(location.pathname)){
@@ -19,6 +19,10 @@ export const NavBar = () => {
     }
     if (location.pathname == "/lab4"){
       setTitle(titles[2])
+      return
+    }
+    if (location.pathname == "/lab5"){
+      setTitle(titles[3])
       return
     }
     setTitle("Page not found")
@@ -80,6 +84,21 @@ export const NavBar = () => {
             >
               <span className="lead">
                 Лабораторная работа №4
+              </span>
+            </button>
+          </div>
+
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab5");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №5
               </span>
             </button>
           </div>

@@ -1,6 +1,5 @@
 import React from "react";
 export const CustomInput = (props) => {
-  console.log(props.label2)
   const label2 = props.label2 == null ? '*1' : props.label2
   return (
     <div className="input-group justify-content-center">

@@ -24,15 +24,15 @@ export default function Lab1_2() {
   const [data, setData] = useState(null);
 
   const buildDiagram = (ra, rc1, rc2, rt0, rtk, rdt, rf0, rfk, rdf) => {
-    const a = ra == 0 ? 2 : ra
-    const c1 = rc1 == 0 ? -10 : rc1
-    const c2 = rc2 == 0 ? 10 : rc2
-    const t0 = rt0 == 0 ? 0.1 : rt0
-    const tk = rtk == 0 ? 2 : rtk
-    const dt = rdt == 0 ? 0.2 : rdt
-    const f0 = rf0 == 0 ? 5 : rf0
-    const fk = rfk == 0 ? 10 : rfk
-    const df = rdf == 0 ? 5 : rdf
+    const a = (ra == 0 ? 2 : ra) * 1
+    const c1 = (rc1 == 0 ? -10 : rc1) * 1
+    const c2 = (rc2 == 0 ? 10 : rc2) * 1
+    const t0 = (rt0 == 0 ? 0.1 : rt0) * 1
+    const tk = (rtk == 0 ? 2 : rtk) * 1
+    const dt = (rdt == 0 ? 0.2 : rdt) * 1
+    const f0 = (rf0 == 0 ? 5 : rf0) * 1
+    const fk = (rfk == 0 ? 10 : rfk) * 1
+    const df = (rdf == 0 ? 5 : rdf) * 1
     if (dt <= 0) {
       alert("dt cannot be less than or equal to zero");
       return;
