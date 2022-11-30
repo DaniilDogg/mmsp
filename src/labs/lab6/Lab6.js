@@ -1,11 +1,11 @@
-import "./Lab5.css";
+import "./Lab6.css";
 import React, { useState, useRef, useEffect, useCallback, memo } from "react";
 
 import { InputGroup } from "../InputGroup";
 
 import { Diagram } from "./components/Diagram";
 
-export default function Lab5() {
+export default function Lab6() {
   const ref_x1 = useRef();
   const ref_x = useRef();
   const ref_y1 = useRef();
@@ -67,80 +67,28 @@ export default function Lab5() {
     let id = 0;
     const d = [];
 
-    for (let m = m0; m <= mk; m += dm) {
-      d.push(modelEquation(x, x1, y, y1, m, c, K, t0, tk, dt, id++));
-      c += dc;
-      K += dK;
-    }
+    const func = (x, k, g = 9.8) => {
+      return (k * x) / g
+    };
+    let k = 4;
+    const startSpeedArguments = [10, 7.5, 5, 2.5];
+    const model = [];
+    const modelArguments = [];
+    startSpeedArguments.forEach((startSpeed) => {
+      modelArguments.push(Number(startSpeed));
+      model.push(func(startSpeed, k));
+    });
+    console.log(model, modelArguments);
 
     const myData = [];
-    for (let i = 0; i < d[0].length; i++) {
-      const obj = {};
-      for (let j = 0; j < d.length; j++) {
-        Object.assign(obj, d[j][i]);
-      }
-      myData.push(obj);
+    for (let i = 0; i < model.length; i++) {
+      myData.push({ Y: model[i].toFixed(2), X: modelArguments[i].toFixed(2) });
     }
     //console.log(myData)
     setData(myData);
   };
 
-  function modelEquation(x, x1, y, y1, m, c, k, t0, tk, dt, id) {
-    let mCur = m,
-      cCur = c,
-      kCur = k;
-
-    let func = (x1, x2, y1, y2, k = kCur, c = cCur, m = mCur, g = 9.8) => {
-      let cage, cargo;
-
-      cage = -(g + (k * x2) / m - (c * (y1 - x1)) / m);
-      cargo = -(g + (c * (y1 - x1)) / m);
-
-      return [cage, cargo];
-    };
-
-    const model = EulerMethod((tk - t0) / dt, dt, x, x1, y, y1, func);
-
-    let modelArguments = [];
-    for (let i = 0; i < model[1].length; i++) {
-      modelArguments.push(Number((dt * i + t0).toFixed(4)));
-    }
-
-    //console.log('Array of models -', [modelArguments, model[1], model[3]])
-
-    const d = [];
-    for (let i = 0; i < modelArguments.length; i++) {
-      d.push({ X: modelArguments[i], ["Y" + id]: model[1][i] });
-    }
-    //console.log('Array d - ', d)
-    return d;
-  }
-
-  function EulerMethod(n, h, x1_0, x2_0, y1_0, y2_0, func) {
-    let x1 = [x1_0];
-    let x2 = [x2_0];
-
-    let y1 = [y1_0];
-    let y2 = [y2_0];
-
-    for (let i = 0; i < n; i++) {
-      let x1_prev = x1[x1.length - 1];
-      let x2_prev = x2[x2.length - 1];
-
-      let y1_prev = y1[y1.length - 1];
-      let y2_prev = y2[y2.length - 1];
-
-      x1.push(x1_prev + h * x2_prev);
-      y1.push(y1_prev + h * y2_prev);
-
-      let [cage, cargo] = func(x1_prev, x2_prev, y1_prev, y2_prev);
-
-      x2.push(x2_prev + h * cage);
-      y2.push(y2_prev + h * cargo);
-    }
-
-    return [x1, x2, y1, y2];
-  }
+  //---------
 
   const inputs = [
     [
@@ -342,7 +290,7 @@ export default function Lab5() {
   ];
   return (
     <div>
-      <div className="container lab4" style={{ height: "100vh" }} ref={main}>
+      <div className="container lab5" style={{ height: "100vh" }} ref={main}>
         <div className="d-flex py-2 px-0 mt-4">
           <InputGroup inputs={inputs} />
         </div>
@@ -382,6 +330,7 @@ export default function Lab5() {
           <></>
         )}
       </div>
+      
     </div>
   );
 }

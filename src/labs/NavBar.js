@@ -6,7 +6,18 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const titles = ['Модель колебательного контура', 'Примеры моделирования физических процессов', 'Моделирование колебательного контура', 'Пример моделирования физического процесса «Шахтная клеть»']
+  const titles = [
+    'Модель колебательного контура',
+    'Примеры моделирования физических процессов',
+    'Моделирование колебательного контура',
+    'Пример моделирования физического процесса «Шахтная клеть»',
+    'Пример моделирования физического процесса «Шахтная клеть» (Продолжение)',
+    'Моделирование интенсивности гамма-излучения',
+    'Разработка модели определения содержания полезного компонента',
+    'Математическая модель интенсивности рассеянного гамма-излучения',
+    '',
+    '',
+  ]
 
   useEffect(()=>{
     if (["/", "/mmsp", "/mmsp/", "/lab1-2"].includes(location.pathname)){
@@ -23,6 +34,22 @@ export const NavBar = () => {
     }
     if (location.pathname == "/lab5"){
       setTitle(titles[3])
+      return
+    }
+    if (location.pathname == "/lab6"){
+      setTitle(titles[4])
+      return
+    }
+    if (location.pathname == "/lab7"){
+      setTitle(titles[5])
+      return
+    }
+    if (location.pathname == "/lab8"){
+      setTitle(titles[6])
+      return
+    }
+    if (location.pathname == "/lab9"){
+      setTitle(titles[7])
       return
     }
     setTitle("Page not found")
@@ -102,6 +129,67 @@ export const NavBar = () => {
               </span>
             </button>
           </div>
+
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab6");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №6
+              </span>
+            </button>
+          </div>
+
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab7");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №7
+              </span>
+            </button>
+          </div>
+
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab8");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №8
+              </span>
+            </button>
+          </div>
+
+          <div className="d-flex border-bottom border-secondary border-opacity-50">
+            <button
+              type="button"
+              className="btn text-reset flex-grow-1 text-start py-2"
+              data-bs-dismiss="offcanvas"
+              onClick={()=>{
+                navigate("/lab9");
+              }}
+            >
+              <span className="lead">
+                Лабораторная работа №9
+              </span>
+            </button>
+          </div>
+
         </div>
       </div>
 

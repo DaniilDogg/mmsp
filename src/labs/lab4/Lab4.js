@@ -97,7 +97,7 @@ export default function Lab4() {
       L = LCur,
       E = ECur
     ) => {
-      return (E - q1 / C - R * q2) / L;
+      return (E - q2 / C - R * q1) / L;
     };
 
     const eulerMethodIterationCount = (tk - t0) / dt;
